@@ -5,32 +5,39 @@ use App\Tablas\Factura;
 
 require '../vendor/autoload.php';
 
+//Comprobar que el usuario esta logueado.
 if (!($usuario = \App\Tablas\Usuario::logueado())) {
     return volver();
 }
 
 $id = obtener_get('id');
 
+//Comprobar si se ha recogido el id de la factura.
 if (!isset($id)) {
     return volver();
 }
 
 $pdo = conectar();
 
+//El metodo obtener es de la clase modelo y en esta ocasión se realiza con Factura.
+//Recoge la factura con el id indicado.
 $factura = Factura::obtener($id, $pdo);
 
+//Comprobar si se ha recogido la factura indicada.
 if (!isset($factura)) {
     return volver();
 }
 
+//Comprobar si la factura es del usuario logueado.
 if ($factura->getUsuarioId() != $usuario->id) {
     return volver();
 }
 
+//Tabla
 $filas_tabla = '';
 $total = 0;
 
-foreach ($factura->getLineas($pdo) as $linea) {
+foreach ($factura->getLineas($pdo) as $linea) { //Duda funcionamiento.
     $articulo = $linea->getArticulo();
     $codigo = $articulo->getCodigo();
     $descripcion = $articulo->getDescripcion();

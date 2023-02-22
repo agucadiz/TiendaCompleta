@@ -13,12 +13,14 @@ try {
         return volver();
     }
 
+    //Duda.
     $articulo = Articulo::obtener($id);
 
     if ($articulo === null) {
         return volver();
     }
 
+    //Control de las existencias.
     if ($articulo->getStock() <= 0) {
         $_SESSION['error'] = 'No hay existencias suficientes.';
         return volver();

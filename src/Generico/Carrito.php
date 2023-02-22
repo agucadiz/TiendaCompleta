@@ -14,6 +14,7 @@ class Carrito extends Modelo
         $this->lineas = [];
     }
 
+    //Incrementa o crea una nueva linea en el carrito.
     public function insertar($id)
     {
         if (!($articulo = Articulo::obtener($id))) {
@@ -27,6 +28,7 @@ class Carrito extends Modelo
         }
     }
 
+    //Decrementa o elimina una linea en el carrito.
     public function eliminar($id)
     {
         if (isset($this->lineas[$id])) {
@@ -39,21 +41,25 @@ class Carrito extends Modelo
         }
     }
 
+    //Información si el carrito esta vacio o no.
     public function vacio(): bool
     {
         return empty($this->lineas);
     }
 
+    //Muestra las lineas del carrito.
     public function getLineas(): array
     {
         return $this->lineas;
     }
 
+    //muesta los ids de las lineas del carrito.
     public function getIds(): array
     {
         return array_keys($this->lineas);
     }
 
+    //Muestra la linea indicada por su id.
     public function getLinea($id): Linea
     {
         return $this->lineas[$id];

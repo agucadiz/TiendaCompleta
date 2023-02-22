@@ -30,7 +30,7 @@ class Usuario extends Modelo
 
     public static function logueado(): ?static
     {
-        return isset($_SESSION['login']) ? unserialize($_SESSION['login']) : null;
+        return isset($_SESSION['login']) ? unserialize($_SESSION['login']) : null; //Duda, ¿porque se deserializa el login?
     }
 
     public static function comprobar($login, $password, ?PDO $pdo = null)
@@ -47,12 +47,12 @@ class Usuario extends Modelo
             return false;
         }
 
-        return password_verify($password, $fila['password'])
+        return password_verify($password, $fila['password']) //Duda.
             ? new static($fila)
             : false;
     }
 
-    public static function existe($login, ?PDO $pdo = null): bool
+    public static function existe($login, ?PDO $pdo = null): bool //Duda.
     {
         return $login == '' ? false :
             !empty(static::todos(

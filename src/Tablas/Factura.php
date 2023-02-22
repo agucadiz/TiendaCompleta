@@ -21,6 +21,7 @@ class Factura extends Modelo
         $this->total = isset($campos['total']) ? $campos['total'] : null;
     }
 
+    //True si existe la factura indicada.
     public static function existe(int $id, ?PDO $pdo = null): bool
     {
         return static::obtener($id, $pdo) !== null;
@@ -36,6 +37,7 @@ class Factura extends Modelo
         return $this->usuario_id;
     }
 
+    //Muestra el total de la factura.
     public function getTotal(?PDO $pdo = null)
     {
         $pdo = $pdo ?? conectar();
@@ -53,6 +55,7 @@ class Factura extends Modelo
         return $this->total;
     }
 
+    //Muestra todas las facturas con su totales.
     public static function todosConTotal(
         array $where = [],
         array $execute = [],
@@ -81,6 +84,7 @@ class Factura extends Modelo
         return $res;
     }
 
+    //Muestra todas las lineas de la factura.
     public function getLineas(?PDO $pdo = null): array
     {
         $pdo = $pdo ?? conectar();

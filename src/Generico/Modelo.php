@@ -4,5 +4,5 @@ namespace App\Generico;
 
 class Modelo
 {
-
+    //
 }

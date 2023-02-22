@@ -1,5 +1,6 @@
 <?php
 
+//Conectar con la BBDD
 function conectar()
 {
     return new \PDO('pgsql:host=localhost,dbname=tienda', 'tienda', 'tienda');
@@ -35,6 +36,7 @@ function volver()
     header('Location: /index.php');
 }
 
+//Serializa el carrito.
 function carrito()
 {
     if (!isset($_SESSION['carrito'])) {

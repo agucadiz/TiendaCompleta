@@ -9,12 +9,13 @@ class Linea extends Modelo
     private Articulo $articulo;
     private int $cantidad;
 
+    //Una linea tiene que tener almenos 1 articulo de cantidad.
     public function __construct(Articulo $articulo, int $cantidad = 1)
     {
         $this->setArticulo($articulo);
         $this->setCantidad($cantidad);
     }
-
+    
     public function getArticulo(): Articulo
     {
         return $this->articulo;

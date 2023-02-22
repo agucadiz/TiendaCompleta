@@ -19,25 +19,29 @@
 
     $carrito = unserialize(carrito());
 
-    if (obtener_post('_testigo') !== null) {
+    if (obtener_post('_testigo') !== null) { //_testigo para saber que se ha pulsado el botón "Realizar pedido".
         $pdo = conectar();
+
+        //Impedir la creación de factura si al hacerlo se quedara algún artículo con existencias negativas.
         $sent = $pdo->prepare('SELECT *
                                  FROM articulos
                                 WHERE id IN (:ids)');
         $sent->execute([':ids' => implode(', ', $carrito->getIds())]);
         foreach ($sent->fetchAll(PDO::FETCH_ASSOC) as $fila) {
+            //Si el stock es menor que la cantidad que se va a comprar, error.
             if ($fila['stock'] < $carrito->getLinea($fila['id'])->getCantidad()) {
                 $_SESSION['error'] = 'No hay existencias suficientes para crear la factura.';
                 return volver();
             }
         }
-        // Crear factura
+
+        // Crear factura si la compra ha sido exitosa.
         $usuario = \App\Tablas\Usuario::logueado();
         $usuario_id = $usuario->id;
         $pdo->beginTransaction();
         $sent = $pdo->prepare('INSERT INTO facturas (usuario_id)
                                VALUES (:usuario_id)
-                               RETURNING id');
+                               RETURNING id');  //Duda.
         $sent->execute([':usuario_id' => $usuario_id]);
         $factura_id = $sent->fetchColumn();
         $lineas = $carrito->getLineas();
@@ -45,17 +49,20 @@
         $execute = [':f' => $factura_id];
         $i = 1;
 
+        //Nose que hace este foreach.
         foreach ($lineas as $id => $linea) {
+            // articulos_facturas (articulo_id, factura_id, cantidad)
             $values[] = "(:a$i, :f, :c$i)";
             $execute[":a$i"] = $id;
             $execute[":c$i"] = $linea->getCantidad();
             $i++;
         }
 
-        $values = implode(', ', $values);
+        //Reducir las existencias del artículo al crear una factura.
+        $values = implode(', ', $values); //Duda.
         $sent = $pdo->prepare("INSERT INTO articulos_facturas (articulo_id, factura_id, cantidad)
                                VALUES $values");
-        $sent->execute($execute);
+        $sent->execute($execute); //Duda
         foreach ($lineas as $id => $linea) {
             $cantidad = $linea->getCantidad();
             $sent = $pdo->prepare('UPDATE articulos
@@ -68,7 +75,6 @@
         unset($_SESSION['carrito']);
         return volver();
     }
-
     ?>
 
     <div class="container mx-auto">
@@ -113,8 +119,11 @@
                 </tfoot>
             </table>
             <form action="" method="POST" class="mx-auto flex mt-4">
+                <!-- _testigo -->
                 <input type="hidden" name="_testigo" value="1">
-                <button type="submit" href="" class="mx-auto focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-900">Realizar pedido</button>
+                <button type="submit" href="" class="mx-auto focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-900">
+                    Realizar pedido
+                </button>
             </form>
         </div>
     </div>

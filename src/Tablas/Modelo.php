@@ -16,7 +16,7 @@ class Modelo
                                  FROM $tabla
                                 WHERE id = :id");
         $sent->execute([':id' => $id]);
-        $fila = $sent->fetch(PDO::FETCH_ASSOC);
+        $fila = $sent->fetch(PDO::FETCH_ASSOC); //Duda fetch.
 
         return $fila ? new static($fila) : null;
     }

@@ -16,12 +16,14 @@ use App\Tablas\Usuario;
 </head>
 
 <body>
+    <!-- Facturas -->
     <?php require '../vendor/autoload.php';
 
     if (!\App\Tablas\Usuario::esta_logueado()) {
         return redirigir_login();
     }
 
+    //Las facturas con el total(precio * cantidad) del usuario.
     $facturas = Factura::todosConTotal(
         ['usuario_id = :usuario_id'],
         [':usuario_id' => Usuario::logueado()->id]
@@ -54,7 +56,9 @@ use App\Tablas\Usuario;
                             </td>
                             <td class="px-6 text-center">
                                 <a href="/factura_pdf.php?id=<?= $factura->id ?>" target="_blank">
-                                   <button class="focus:outline-none text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-900">PDF</button>
+                                   <button class="focus:outline-none text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-900">
+                                    PDF
+                                </button>
                                 </a>
                             </td>
                         </tr>

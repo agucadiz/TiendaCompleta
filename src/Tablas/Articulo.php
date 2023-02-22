@@ -8,7 +8,7 @@ class Articulo extends Modelo
 {
     protected static string $tabla = 'articulos';
 
-    public $id;
+    public $id; //Duda, ¿id publico?
     private $codigo;
     private $descripcion;
     private $precio;
@@ -23,6 +23,7 @@ class Articulo extends Modelo
         $this->stock = $campos['stock'];
     }
 
+    //Nos dice si el articulo existe.
     public static function existe(int $id, ?PDO $pdo = null): bool
     {
         return static::obtener($id, $pdo) !== null;

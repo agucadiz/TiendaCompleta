@@ -22,9 +22,11 @@ use App\Tablas\Usuario;
     $password = obtener_post('password');
     $password_repeat = obtener_post('password_repeat');
 
+    $error = ['login' => [], 'password' => [], 'password_repeat' => []];
+
+    //Estilo de los errores.
     $clases_label = [];
     $clases_input = [];
-    $error = ['login' => [], 'password' => [], 'password_repeat' => []];
 
     $clases_label_error = "text-red-700 dark:text-red-500";
     $clases_input_error = "bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500 dark:bg-red-100 dark:border-red-400";
@@ -33,18 +35,23 @@ use App\Tablas\Usuario;
         $clases_label[$e] = '';
         $clases_input[$e] = '';
     }
+    // $clases_label = ["login" = '', "password" = '', "password_repeat" = '']
+    // $clases_input = ["login" = '', "password" = '', "password_repeat" = '']
 
+    //Validaciones.
     if (isset($login, $password, $password_repeat)) {
         $pdo = conectar();
 
+        //Validaciones usuario.
         if ($login == '') {
             $error['login'][] = 'El usuario es obligatorio.';
         } else if (mb_strlen($login) > 255) {
             $error['login'][] = 'El nombre de usuario es demasiado largo.';
-        } else if (\App\Tablas\Usuario::existe($login, $pdo)) {
+        } else if (\App\Tablas\Usuario::existe($login, $pdo)) {  //-> DUDA
             $error['login'][] = 'El usuario ya existe.';
         }
 
+        //Validaciones password.
         if ($password != $password_repeat) {
             $error['password'][] = 'Las contraseñas no coinciden.';
         }
@@ -92,6 +99,7 @@ use App\Tablas\Usuario;
             $_SESSION['exito'] = 'El usuario se ha registrado correctamente.';
             return redirigir_login();
         } else {
+            //Estilos input y label
             foreach (['login', 'password', 'password_repeat'] as $e) {
                 if (isset($error[$e])) {
                     $clases_input[$e] = $clases_input_error;

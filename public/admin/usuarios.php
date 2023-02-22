@@ -14,6 +14,7 @@
     <?php
     require '../../vendor/autoload.php';
 
+    //Comprobar si el usuario esta logueado y si es admin.
     if ($usuario = \App\Tablas\Usuario::logueado()) {
         if (!$usuario->es_admin()) {
             $_SESSION['error'] = 'Acceso no autorizado.';
@@ -48,15 +49,24 @@
                 <tbody>
                     <?php foreach ($sent as $fila) : ?>
                         <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                            <!-- Usuarios -->
                             <td class="py-4 px-6"><?= hh($fila['usuario']) ?></td>
+                            <!-- Acciones -->
                             <td class="px-6 text-center">
                                 <?php $fila_id = hh($fila['id']) ?>
                                 <form action="" method="POST" class="inline">
                                     <input type="hidden" name="id" value="<?= $fila_id ?>">
-                                    <?php if ($fila['validado']): ?>
-                                        <button type="submit" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">Invalidar</button>
-                                    <?php else: ?>
-                                        <button type="submit" class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-900">Validar</button>
+                                    <!-- Botón de validar/invalidar: -->
+                                    <?php if ($fila['validado']) : ?>
+                                        <!-- Si validado == true -->
+                                        <button type="submit" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">
+                                            Invalidar
+                                        </button>
+                                    <?php else : ?>
+                                        <!-- Si validado == false -->
+                                        <button type="submit" class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-900">
+                                            Validar
+                                        </button>
                                     <?php endif ?>
                                 </form>
                             </td>

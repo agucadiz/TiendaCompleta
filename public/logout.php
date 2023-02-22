@@ -4,7 +4,8 @@ session_start();
 require '../src/auxiliar.php';
 
 $_SESSION = [];
-$params = session_get_cookie_params();
+$params = session_get_cookie_params(); 
+//Duda, ¿borrar cookies?
 setcookie(
     session_name(),
     '',
