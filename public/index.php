@@ -16,10 +16,12 @@
 
     $carrito = unserialize(carrito());
 
+    //Conectar a base de datos y consulta:
     $pdo = conectar();
     $sent = $pdo->query("SELECT a.id , codigo, descripcion, precio, categoria_id, stock, categoria, c.id AS cat_id
                            FROM articulos a 
-                           JOIN categorias c ON a.categoria_id = c.id 
+                           JOIN categorias c 
+                             ON a.categoria_id = c.id 
                        ORDER BY codigo");
 
 
@@ -59,9 +61,10 @@
 
     <div class="container mx-auto">
 
-        <?php require '../src/_menu.php' ?>
+        <?php require '../src/_menu.php' ?> 
         <?php require '../src/_alerts.php' ?>
 
+        <!-- Buscador -->
         <div>
             <form action="" method="get">
                 <fieldset>
@@ -69,22 +72,22 @@
                     <div class="mb-3 font-normal text-gray-700 dark:text-gray-400">
                         <label class="block mb-2 text-sm font-medium w-1/4 pr-4">
                             Nombre del artículo:
-                            <input type="text" name="nombre" value="<?= $nombre ?>" class="border text-sm rounded-lg w-full p-1.5">
+                            <input type="text" name="nombre" class="border text-sm rounded-lg w-full p-1.5">
                         </label>
 
                         <label class="block mb-2 text-sm font-medium w-1/4 pr-4">
                             Precio mínimo:
-                            <input type="text" name="precio_min" value="<?= $precio_min ?>" class="border text-sm rounded-lg w-full p-1.5">
+                            <input type="text" name="precio_min" class="border text-sm rounded-lg w-full p-1.5">
                         </label>
 
                         <label class="block mb-2 text-sm font-medium w-1/4 pr-4">
                             Precio máximo:
-                            <input type="text" name="precio_max" value="<?= $precio_max ?>" class="border text-sm rounded-lg w-full p-1.5">
+                            <input type="text" name="precio_max" class="border text-sm rounded-lg w-full p-1.5">
                         </label>
 
                         <label class="block mb-2 text-sm font-medium w-1/4 pr-4">
                             Categoría:
-                            <select id="categoria" name="categoria" class="block mt-2 mb-2 text-sm font-medium text-gray-900 dark:text-gray-300 border rounded-lg w-full p-1.5">
+                            <select name="categoria" class="block mt-2 mb-2 text-sm font-medium text-gray-900 dark:text-gray-300 border rounded-lg w-full p-1.5">
                                 <option value="">Elegir</option>
                                 <option value="Informática">Informática</option>
                                 <option value="Alimentación">Alimentación</option>
@@ -101,12 +104,13 @@
 
         <br>
 
+        <!-- Tarjetas articulos -->
         <div class="container mx-auto">
             <div class="flex">
                 <main class="flex-1 grid grid-cols-3 gap-4 justify-center justify-items-center">
                     <?php foreach ($sent as $fila) : ?>
                         <div class="p-6 max-w-xs min-w-full bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
-                            <!-- Descripción del articulo -->
+                            <!-- Mostrar descripción de cada artículo -->
                             <a href="#">
                                 <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"><?= hh($fila['descripcion']) ?></h5>
                             </a>
@@ -132,7 +136,8 @@
                         </div>
                     <?php endforeach ?>
                 </main>
-
+                
+                <!-- Carrito de la compra -->
                 <?php if (!$carrito->vacio()) : ?>
                     <aside class="flex flex-col items-center w-1/4" aria-label="Sidebar">
                         <div class="overflow-y-auto py-4 px-3 bg-gray-50 rounded dark:bg-gray-800">
@@ -148,7 +153,7 @@
                                         $cantidad = $linea->getCantidad();
                                         ?>
                                         <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                                            <td class="py-4 px-6"><?= $articulo->getDescripcion() ?></td>
+                                            <td class="py-4 px-6"><?= $articulo->getDescripcion() ?></td> <!-- Intentar mostrar categoría -->
                                             <td class="py-4 px-6 text-center"><?= $cantidad ?></td>
                                         </tr>
                                     <?php endforeach ?>
