@@ -41,7 +41,7 @@
         $pdo->beginTransaction();
         $sent = $pdo->prepare('INSERT INTO facturas (usuario_id)
                                VALUES (:usuario_id)
-                               RETURNING id');  //Duda.
+                               RETURNING id');  //Retorna el id de la facturas que se ha insertado.
         $sent->execute([':usuario_id' => $usuario_id]);
         $factura_id = $sent->fetchColumn();
         $lineas = $carrito->getLineas();
@@ -50,7 +50,7 @@
         $i = 1;
 
         //Nose que hace este foreach.
-        foreach ($lineas as $id => $linea) {
+        foreach ($lineas as $id => $linea) { //sin $id parece que funciona tb.
             // articulos_facturas (articulo_id, factura_id, cantidad)
             $values[] = "(:a$i, :f, :c$i)";
             $execute[":a$i"] = $id;
