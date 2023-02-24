@@ -18,7 +18,7 @@
 
     //Conectar a base de datos y consulta:
     $pdo = conectar();
-    $sent = $pdo->query("SELECT a.id , codigo, descripcion, precio, categoria_id, stock, categoria, c.id AS cat_id
+    $sent = $pdo->query("SELECT a.*, categoria, c.id AS cat_id
                            FROM articulos a 
                            JOIN categorias c 
                              ON a.categoria_id = c.id 
@@ -51,7 +51,7 @@
     }
 
     $where = !empty($where) ? 'WHERE ' . implode(' AND ', $where) : '';
-    $sent = $pdo->prepare("SELECT a.id , codigo, descripcion, precio, categoria_id, stock, categoria, c.id AS cat_id
+    $sent = $pdo->prepare("SELECT a.*, categoria, c.id AS cat_id
                              FROM articulos a 
                              JOIN categorias c ON a.categoria_id = c.id 
                              $where
@@ -61,7 +61,7 @@
 
     <div class="container mx-auto">
 
-        <?php require '../src/_menu.php' ?> 
+        <?php require '../src/_menu.php' ?>
         <?php require '../src/_alerts.php' ?>
 
         <!-- Buscador -->
@@ -136,7 +136,7 @@
                         </div>
                     <?php endforeach ?>
                 </main>
-                
+
                 <!-- Carrito de la compra -->
                 <?php if (!$carrito->vacio()) : ?>
                     <aside class="flex flex-col items-center w-1/4" aria-label="Sidebar">
@@ -153,7 +153,11 @@
                                         $cantidad = $linea->getCantidad();
                                         ?>
                                         <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                                            <td class="py-4 px-6"><?= $articulo->getDescripcion() ?></td> <!-- Intentar mostrar categoría -->
+                                            <td class="py-4 px-6">
+                                                <b><?= $articulo->getDescripcion() ?></b> 
+                                                <br> 
+                                                <?= $articulo->getCategoria() ?>
+                                            </td>
                                             <td class="py-4 px-6 text-center"><?= $cantidad ?></td>
                                         </tr>
                                     <?php endforeach ?>

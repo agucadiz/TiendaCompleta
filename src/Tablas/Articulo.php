@@ -2,6 +2,7 @@
 
 namespace App\Tablas;
 
+use App\Tablas\Categoria;
 use PDO;
 
 class Articulo extends Modelo
@@ -13,7 +14,7 @@ class Articulo extends Modelo
     private $descripcion;
     private $precio;
     private $stock;
-    private $categoria;
+    private $categoria_id;
 
     public function __construct(array $campos)
     {
@@ -22,7 +23,7 @@ class Articulo extends Modelo
         $this->descripcion = $campos['descripcion'];
         $this->precio = $campos['precio'];
         $this->stock = $campos['stock'];
-        $this->categoria = $campos['categoria'];
+        $this->categoria_id = $campos['categoria_id'];
     }
 
     //Nos dice si el articulo existe.
@@ -51,9 +52,9 @@ class Articulo extends Modelo
         return $this->stock;
     }
 
-    //intento mostrar categoria en carrito.
-    public function getCategoria()
+    //Mostrar categoría en carrito.
+    public function getCategoria(?PDO $pdo = null)
     {
-        return $this->categoria;
+        return Categoria::obtener($this->categoria_id, $pdo)->categoria;
     }
 }
