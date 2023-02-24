@@ -72,17 +72,17 @@
                     <div class="mb-3 font-normal text-gray-700 dark:text-gray-400">
                         <label class="block mb-2 text-sm font-medium w-1/4 pr-4">
                             Nombre del artículo:
-                            <input type="text" name="nombre" class="border text-sm rounded-lg w-full p-1.5">
+                            <input type="text" name="nombre" value="<?= $nombre ?>" class="border text-sm rounded-lg w-full p-1.5">
                         </label>
 
                         <label class="block mb-2 text-sm font-medium w-1/4 pr-4">
                             Precio mínimo:
-                            <input type="text" name="precio_min" class="border text-sm rounded-lg w-full p-1.5">
+                            <input type="text" name="precio_min" value="<?= $precio_min ?>" class="border text-sm rounded-lg w-full p-1.5">
                         </label>
 
                         <label class="block mb-2 text-sm font-medium w-1/4 pr-4">
                             Precio máximo:
-                            <input type="text" name="precio_max" class="border text-sm rounded-lg w-full p-1.5">
+                            <input type="text" name="precio_max" value="<?= $precio_max ?>" class="border text-sm rounded-lg w-full p-1.5">
                         </label>
 
                         <label class="block mb-2 text-sm font-medium w-1/4 pr-4">
