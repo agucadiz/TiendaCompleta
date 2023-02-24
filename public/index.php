@@ -59,7 +59,7 @@
     $sent->execute($execute);
     ?>
 
-    <div class="container mx-auto">
+    <div class="container mx-4">
 
         <?php require '../src/_menu.php' ?>
         <?php require '../src/_alerts.php' ?>
