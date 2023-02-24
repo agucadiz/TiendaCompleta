@@ -58,7 +58,7 @@ class Articulo extends Modelo
         return Categoria::obtener($this->categoria_id, $pdo)->categoria;
     }
 
-    //Insertar articulo.
+    //Insertar artículo.
     public static function insertar($codigo, $descripcion, $precio, $categoria_id, $stock, ?PDO $pdo = null)
     {
         $pdo = $pdo ?? conectar();
@@ -66,5 +66,16 @@ class Articulo extends Modelo
         $sent = $pdo->prepare('INSERT INTO articulos (codigo, descripcion, precio, categoria_id, stock)
                                     VALUES (:codigo, :descripcion, :precio, :categoria_id, :stock)');
         $sent->execute([':codigo' => $codigo, ':descripcion' => $descripcion, ':precio' => $precio, ':categoria_id' => $categoria_id, ':stock' => $stock]);
+    }
+
+    //Modificar artículo.
+    public static function modificar($id, $codigo, $descripcion, $precio, $categoria_id, $stock, ?PDO $pdo = null)
+    {
+        $pdo = $pdo ?? conectar();
+
+        $sent = $pdo->prepare("UPDATE articulos
+                                  SET codigo = :codigo, descripcion = :descripcion, precio = :precio, categoria_id = :categoria_id, stock = :stock
+                                WHERE id = :id");
+        $sent->execute([':id' => $id, ':codigo' => $codigo, ':descripcion' => $descripcion, ':precio' => $precio, ':categoria_id' => $categoria_id, ':stock' => $stock]);
     }
 }
