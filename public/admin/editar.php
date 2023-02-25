@@ -39,7 +39,7 @@
         && isset($categoria_id2) && $categoria_id2 != ''
         && isset($stock2) && $stock2 != ''
     ) {
-        \App\Tablas\Articulo::modificar($id, $codigo2, $descripcion2, $precio2, $categoria_id, $stock2, $pdo);
+        \App\Tablas\Articulo::modificar($id, $codigo2, $descripcion2, $precio2, $categoria_id2, $stock2, $pdo);
         $_SESSION['exito'] = "El articulo se ha modificado correctamente.";
         return volver_admin();
     }
