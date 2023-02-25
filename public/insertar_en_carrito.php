@@ -7,6 +7,8 @@ session_start();
 
 require '../vendor/autoload.php';
 
+$categoria = obtener_get('categoria');
+
 try {
     $id = obtener_get('id');
 
@@ -31,8 +33,14 @@ try {
     $carrito = unserialize(carrito());
     $carrito->insertar($id);
     $_SESSION['carrito'] = serialize($carrito);
+
+    //Si se buscó con categorías, se guardad en la url.
+    if ($categoria !== null) {
+        header('Location: index.php?nombre=&precio_min=&precio_max=&categoria=' . $categoria);
+    } else {
+        volver();
+    }
 } catch (ValueError $e) {
     // TODO: mostrar mensaje de error en un Alert
 }
 
-volver();
