@@ -33,7 +33,8 @@
     //Conexión a BBDD.
     $pdo = conectar();
     $sent = $pdo->query("SELECT a.*, categoria 
-                         FROM articulos a JOIN categorias c ON a.categoria_id = c.id 
+                         FROM articulos a JOIN categorias c 
+                         ON a.categoria_id = c.id 
                          ORDER BY codigo");
     ?>
 
@@ -68,9 +69,10 @@
                         <?php $fila_id = hh($fila['id']) ?>
                         <?php $fila_codigo = hh($fila['codigo']) ?>
                         <?php $fila_descripcion = hh($fila['descripcion']) ?>
-                        <?php $fila_precio = hh(dinero($fila['precio'])) ?>
+                        <?php $fila_precio = hh($fila['precio']) ?>
                         <?php $fila_categoria = hh($fila['categoria']) ?>
                         <?php $fila_stock = hh($fila['stock']) ?>
+                        <?php $fila_categoria_id = hh($fila['categoria_id']) ?>
 
                         <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                             <td class="py-4 px-6"><?= $fila_codigo ?></td>
@@ -81,7 +83,7 @@
 
                             <!-- Botones de editar y borrar artículos -->
                             <td class="px-6 text-center">
-                                <a href="/admin/editar.php?id=<?= $fila_id ?>&codigo=<?= $fila_codigo ?>&descripcion=<?= $fila_descripcion ?>&precio=<?= $fila_precio ?>&stock=<?= $fila_stock ?>">
+                                <a href="/admin/editar.php?id=<?= $fila_id ?>&codigo=<?= $fila_codigo ?>&descripcion=<?= $fila_descripcion ?>&precio=<?= $fila_precio ?>&stock=<?= $fila_stock ?>&categoria_id=<?= $fila_categoria_id ?>">
                                     <button class="focus:outline-none text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-900">
                                         Editar
                                     </button>
