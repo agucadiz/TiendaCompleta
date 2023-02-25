@@ -46,8 +46,8 @@
         $execute[':precio_max'] = $precio_max;
     }
     if (isset($categoria) && $categoria != '') {
-        $where[] = 'lower(categoria) LIKE lower(:categoria)';
-        $execute[':categoria'] = "%$categoria%";
+        $where[] = 'categoria_id = :categoria';
+        $execute[':categoria'] = $categoria;
     }
 
     $where = !empty($where) ? 'WHERE ' . implode(' AND ', $where) : '';
@@ -88,10 +88,16 @@
                         <label class="block mb-2 text-sm font-medium w-1/4 pr-4">
                             Categoría:
                             <select name="categoria" class="block mt-2 mb-2 text-sm font-medium text-gray-900 dark:text-gray-300 border rounded-lg w-full p-1.5">
-                                <option value="">Elegir</option>
-                                <option value="Informática">Informática</option>
-                                <option value="Alimentación">Alimentación</option>
-                                <option value="Otros">Otros</option>
+
+                                <?php $category = $pdo->query("SELECT * FROM categorias"); ?>
+
+                                <option value=""> Elegir categoría </option>
+                                <?php foreach ($category as $categories) : ?>
+                                    <option value=<?= hh($categories['id']) ?> <?= ($categories['id'] == $categoria) ? 'selected' : '' ?>>
+                                        <?= hh($categories['categoria']) ?>
+                                    </option>
+                                <?php endforeach ?>
+
                             </select>
                         </label>
                     </div>
@@ -154,8 +160,8 @@
                                         ?>
                                         <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                             <td class="py-4 px-6">
-                                                <b><?= $articulo->getDescripcion() ?></b> 
-                                                <br> 
+                                                <b><?= $articulo->getDescripcion() ?></b>
+                                                <br>
                                                 <?= $articulo->getCategoria() ?>
                                             </td>
                                             <td class="py-4 px-6 text-center"><?= $cantidad ?></td>

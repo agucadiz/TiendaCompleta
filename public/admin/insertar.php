@@ -15,6 +15,8 @@
     <?php
     require '../../vendor/autoload.php';
 
+    $pdo = conectar();
+
     $codigo = obtener_post('codigo');
     $descripcion = obtener_post('descripcion');
     $precio = obtener_post('precio');
@@ -58,11 +60,17 @@
                 <label for="categoria_id" class="block mt-2 mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
                     Categoría
                 </label>
-                <select name="categoria_id" class="block mt-2 mb-2 text-sm font-medium text-gray-900 dark:text-gray-300" required>
-                    <option value="">Elegir</option>
-                    <option value="1">Informática</option>
-                    <option value="2">Alimentación</option>
-                    <option value="3">Otros</option>
+                <select name="categoria_id" class="block mt-2 mb-2 text-sm font-medium text-gray-900 dark:text-gray-300 border rounded-lg w-full p-1.5" required>
+
+                    <?php $categorias = $pdo->query("SELECT * FROM categorias"); ?>
+
+                    <option value=""> Elegir categoría </option>
+                    <?php foreach ($categorias as $categoria) : ?>
+                        <option value=<?= hh($categoria['id']) ?> <?= ($categoria['id'] == $categoria_id) ? 'selected' : '' ?>>
+                            <?= hh($categoria['categoria']) ?>
+                        </option>
+                    <?php endforeach ?>
+
                 </select>
             </div>
 

@@ -74,26 +74,17 @@
                 </label>
 
                 <!-- Guarda la categoría del panel de administración -->
-                <?php
-                $categories = array(
-                    "" => "Elegir",
-                    "1" => "Informática",
-                    "2" => "Alimentación",
-                    "3" => "Otros"
-                );
+                <select name="categoria_id2" class="block mt-2 mb-2 text-sm font-medium text-gray-900 dark:text-gray-300 border rounded-lg w-full p-1.5" required>
 
-                foreach ($categories as $cat_id => $cat_nombre) {
-                    if ($cat_id == $categoria_id) {
-                        $menu .= '<option value="' . $cat_id . '" selected>' . $cat_nombre . '</option>';
-                    } else {
-                        $menu .= '<option value="' . $cat_id . '">' . $cat_nombre . '</option>';
-                    }
-                }
-                ?>
-                <select name="categoria_id2" class="block mt-2 mb-2 text-sm font-medium text-gray-900 dark:text-gray-300" required>
-                    <?php
-                    print_r($menu);
-                    ?>
+                    <?php $categorias = $pdo->query("SELECT * FROM categorias"); ?>
+
+                    <option value=""> Elegir categoría </option>
+                    <?php foreach ($categorias as $categoria) : ?>
+                        <option value=<?= hh($categoria['id']) ?> <?= ($categoria['id'] == $categoria_id) ? 'selected' : '' ?>>
+                            <?= hh($categoria['categoria']) ?>
+                        </option>
+                    <?php endforeach ?>
+
                 </select>
             </div>
 
