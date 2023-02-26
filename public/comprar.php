@@ -87,6 +87,7 @@
                     <th scope="col" class="py-3 px-6">Cantidad</th>
                     <th scope="col" class="py-3 px-6">Precio</th>
                     <th scope="col" class="py-3 px-6">Importe</th>
+                    <th scope="col" class="py-3 px-6 text-center">Acciones</th>
                 </thead>
                 <tbody>
                     <?php $total = 0 ?>
@@ -94,6 +95,7 @@
                         <?php
                         $articulo = $linea->getArticulo();
                         $codigo = $articulo->getCodigo();
+                        $articulo_id = $articulo->getId();
                         $cantidad = $linea->getCantidad();
                         $precio = $articulo->getPrecio();
                         $importe = $cantidad * $precio;
@@ -108,6 +110,14 @@
                             </td>
                             <td class="py-4 px-6 text-center">
                                 <?= dinero($importe) ?>
+                            </td>
+                            <td>
+                                <a href="/aumentar.php?id=<?= $articulo_id ?>" class="focus:outline-none text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-900">
+                                    Aumentar
+                                </a>
+                                <a href="/disminuir.php?id=<?= $articulo_id ?>" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-4 py-2 mr-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">
+                                    Disminuir
+                                </a>
                             </td>
                         </tr>
                     <?php endforeach ?>

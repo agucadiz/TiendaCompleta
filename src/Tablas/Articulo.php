@@ -52,6 +52,11 @@ class Articulo extends Modelo
         return $this->stock;
     }
 
+    public function getID()
+    {
+        return $this->id;
+    }
+
     //Mostrar categoría en carrito.
     public function getCategoria(?PDO $pdo = null)
     {

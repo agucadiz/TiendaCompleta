@@ -23,7 +23,7 @@ try {
         return volver();
     }
 
-    //Control de las existencias pero no se llega a utilizar porque realiza antes la de index.php.
+    //Control de las existencias pero no se llega a utilizar porque realiza se realiza antes en comprar.php y en el index.php
     if ($articulo->getStock() <= 0) {
         $_SESSION['error'] = 'No hay existencias suficientes.';
         return volver();
