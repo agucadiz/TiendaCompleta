@@ -38,14 +38,22 @@ $filas_tabla = '';
 $total = 0;
 
 foreach ($factura->getLineas($pdo) as $linea) { //Duda funcionamiento.
+    //Obtención de datos.
     $articulo = $linea->getArticulo();
     $codigo = $articulo->getCodigo();
     $descripcion = $articulo->getDescripcion();
     $cantidad = $linea->getCantidad();
     $precio = $articulo->getPrecio();
+
+    //Operaciones con datos.
     $importe = $cantidad * $precio;
+    $iva = $precio * 0.21;
+    $importe = $importe + $iva;
     $total += $importe;
+
+    //Formateado de datos.
     $precio = dinero($precio);
+    $iva = dinero($iva);
     $importe = dinero($importe);
 
     $filas_tabla .= <<<EOF
@@ -54,11 +62,13 @@ foreach ($factura->getLineas($pdo) as $linea) { //Duda funcionamiento.
             <td>$descripcion</td>
             <td>$cantidad</td>
             <td>$precio</td>
+            <td>$iva</td>
             <td>$importe</td>
         </tr>
     EOF;
 }
 
+//Formato monetario al total.
 $total = dinero($total);
 
 $res = <<<EOT
@@ -70,6 +80,7 @@ $res = <<<EOT
         <th>Descripción</th>
         <th>Cantidad</th>
         <th>Precio</th>
+        <th>IVA</th>
         <th>Importe</th>
     </tr>
     <tbody>
