@@ -71,4 +71,20 @@ class Usuario extends Modelo
             ':password' => password_hash($password, PASSWORD_DEFAULT),
         ]);
     }
+
+    public function cambiar_password($user, $password, ?PDO $pdo = null)
+    {
+        $sent = $pdo->prepare("UPDATE usuarios
+                                SET password = :password
+                                WHERE id = :id");
+        $sent->execute([
+            ':id' => $user->obtenerId(),
+            ':password' => password_hash($password, PASSWORD_DEFAULT),
+        ]);
+    }
+
+    public function obtenerId()
+    {
+        return $this->id;
+    }
 }

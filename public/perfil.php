@@ -33,15 +33,9 @@
         <div class="overflow-x-auto relative mt-4">
             <!-- Botones de perfil -->
             <div class="ml-2 mt-10 mb-4">
-                <a href="datos_perfil.php">
-                    <button class="focus:outline-none text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-900">
-                        Datos
-                    </button>
-                </a>
-
                 <a href="cambiar_password.php">
                     <button class="focus:outline-none text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-900">
-                        Contraseña
+                        Cambiar contraseña
                     </button>
                 </a>
             </div>
@@ -53,6 +47,7 @@
                     <th scope="col" class="py-3 px-6">Apellidos</th>
                     <th scope="col" class="py-3 px-6">Email</th>
                     <th scope="col" class="py-3 px-6">Teléfono</th>
+                    <th scope="col" class="py-3 px-6"></th>
                 </thead>
                 <tbody>
                     <?php foreach ($sent as $fila) : ?>
@@ -62,6 +57,13 @@
                             <td class="py-4 px-6"><?= hh($fila['apellidos']) ?></td>
                             <td class="py-4 px-6"><?= hh($fila['email']) ?></td>
                             <td class="py-4 px-6"><?= hh($fila['telefono']) ?></td>
+                            <td class="py-4 px-6">
+                                <a href="datos_perfil.php">
+                                    <button class="focus:outline-none text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-900">
+                                        Editar
+                                    </button>
+                                </a>
+                            </td>
                         </tr>
                     <?php endforeach ?>
                 </tbody>
