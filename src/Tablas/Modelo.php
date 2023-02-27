@@ -21,6 +21,7 @@ class Modelo
         return $fila ? new static($fila) : null;
     }
 
+    //Selecciona todo de la tabla indicada, se le pasa el where, execute y pdo.
     public static function todos(
         array $where = [],
         array $execute = [],

@@ -16,10 +16,14 @@ CREATE TABLE categorias (
 
 DROP TABLE IF EXISTS usuarios CASCADE;
 CREATE TABLE usuarios (
-    id       bigserial    PRIMARY KEY,
-    usuario  varchar(255) NOT NULL UNIQUE,
-    password varchar(255) NOT NULL,
-    validado bool         NOT NULL
+    id          bigserial    PRIMARY KEY,
+    usuario     varchar(255) NOT NULL UNIQUE,
+    nombre      varchar(255),
+    apellidos   varchar(255),
+    email       varchar(255),
+    telefono    varchar(9),
+    password    varchar(255) NOT NULL,
+    validado    bool         NOT NULL
 );
 
 DROP TABLE IF EXISTS facturas CASCADE;

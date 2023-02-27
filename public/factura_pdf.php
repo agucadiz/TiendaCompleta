@@ -43,12 +43,11 @@ foreach ($factura->getLineas($pdo) as $linea) { //Duda funcionamiento.
     $codigo = $articulo->getCodigo();
     $descripcion = $articulo->getDescripcion();
     $cantidad = $linea->getCantidad();
-    $precio = $articulo->getPrecio();
 
     //Operaciones con datos.
-    $importe = $cantidad * $precio;
+    $precio = $articulo->getPrecio() * $cantidad;
     $iva = $precio * 0.21;
-    $importe = $importe + $iva;
+    $importe = $precio + $iva;
     $total += $importe;
 
     //Formateado de datos.
