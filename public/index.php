@@ -37,11 +37,11 @@
         $where[] = 'lower(descripcion) LIKE lower(:nombre)';
         $execute[':nombre'] = "%$nombre%";
     }
-    if (isset($precio_min) && $precio_min != '') {
+    if (isset($precio_min) && $precio_min != '' && is_numeric($precio_min)) {
         $where[] = 'precio >= :precio_min';
         $execute[':precio_min'] = $precio_min;
     }
-    if (isset($precio_max) && $precio_max != '') {
+    if (isset($precio_max) && $precio_max != '' && is_numeric($precio_max)) {
         $where[] = 'precio <= :precio_max ';
         $execute[':precio_max'] = $precio_max;
     }
