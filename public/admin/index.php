@@ -59,6 +59,7 @@
                     <th scope="col" class="py-3 px-6">Código</th>
                     <th scope="col" class="py-3 px-6">Descripción</th>
                     <th scope="col" class="py-3 px-6">Precio</th>
+                    <th scope="col" class="py-3 px-6">Descuento %</th>
                     <th scope="col" class="py-3 px-6">Categoría</th>
                     <th scope="col" class="py-3 px-6">Stock</th>
                     <th scope="col" class="py-3 px-6 text-center">Acciones</th>
@@ -70,6 +71,7 @@
                         <?php $fila_codigo = hh($fila['codigo']) ?>
                         <?php $fila_descripcion = hh($fila['descripcion']) ?>
                         <?php $fila_precio = hh($fila['precio']) ?>
+                        <?php $fila_descuento = hh($fila['descuento']) ?>
                         <?php $fila_categoria = hh($fila['categoria']) ?>
                         <?php $fila_stock = hh($fila['stock']) ?>
                         <?php $fila_categoria_id = hh($fila['categoria_id']) ?>
@@ -78,6 +80,7 @@
                             <td class="py-4 px-6"><?= $fila_codigo ?></td>
                             <td class="py-4 px-6"><?= $fila_descripcion ?></td>
                             <td class="py-4 px-6"><?= $fila_precio ?></td>
+                            <td class="py-4 px-6"><?= $fila_descuento ?>%</td>
                             <td class="py-4 px-6"><?= $fila_categoria ?></td>
                             <td class="py-4 px-6"><?= $fila_stock ?></td>
 
@@ -101,7 +104,7 @@
 
                 <!-- Botón de insertar artículo -->
                 <tfoot>
-                    <td colspan="5"></td>
+                    <td colspan="6"></td>
                     <td class="ml-8 py-4 px-6 flex">
                         <a href="insertar.php" class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
                             Insertar

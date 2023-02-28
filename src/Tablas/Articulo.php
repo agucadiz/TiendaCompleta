@@ -64,13 +64,13 @@ class Articulo extends Modelo
     }
 
     //Insertar artículo.
-    public static function insertar($codigo, $descripcion, $precio, $categoria_id, $stock, ?PDO $pdo = null)
+    public static function insertar($codigo, $descripcion, $precio, $descuento, $categoria_id, $stock, ?PDO $pdo = null)
     {
         $pdo = $pdo ?? conectar();
 
-        $sent = $pdo->prepare('INSERT INTO articulos (codigo, descripcion, precio, categoria_id, stock)
-                                    VALUES (:codigo, :descripcion, :precio, :categoria_id, :stock)');
-        $sent->execute([':codigo' => $codigo, ':descripcion' => $descripcion, ':precio' => $precio, ':categoria_id' => $categoria_id, ':stock' => $stock]);
+        $sent = $pdo->prepare('INSERT INTO articulos (codigo, descripcion, precio, descuento, categoria_id, stock)
+                                    VALUES (:codigo, :descripcion, :precio, :descuento, :categoria_id, :stock)');
+        $sent->execute([':codigo' => $codigo, ':descripcion' => $descripcion, ':precio' => $precio, ':descuento' => $descuento, ':categoria_id' => $categoria_id, ':stock' => $stock]);
     }
 
     //Modificar artículo.

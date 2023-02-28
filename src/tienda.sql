@@ -5,7 +5,8 @@ CREATE TABLE articulos (
     descripcion     varchar(255)    NOT NULL,
     precio          numeric(7, 2)   NOT NULL,
     categoria_id    bigint          NOT NULL REFERENCES categorias(id),
-    stock           int             NOT NULL --stock en artículos.
+    stock           int             NOT NULL, --stock en artículos.
+    descuento       numeric(3)      DEFAULT 0   CHECK (descuento >= 0 AND descuento <= 100)
 );
 
 DROP TABLE IF EXISTS categorias CASCADE;
