@@ -19,6 +19,7 @@ use App\Tablas\Usuario;
     <!-- Facturas -->
     <?php require '../vendor/autoload.php';
 
+    //Solo se puede acceder si se esta logueado.
     if (!\App\Tablas\Usuario::esta_logueado()) {
         return redirigir_login();
     }

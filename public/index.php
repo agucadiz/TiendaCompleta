@@ -59,13 +59,13 @@
     $sent->execute($execute);
     ?>
 
-    <div class="container mx-4">
+    <div class="container mx-auto">
 
         <?php require '../src/_menu.php' ?>
         <?php require '../src/_alerts.php' ?>
 
         <!-- Buscador -->
-        <div>
+        <div class="container mx-4">
             <form action="" method="get">
                 <fieldset>
                     <legend> <b>Búsqueda</b> </legend>

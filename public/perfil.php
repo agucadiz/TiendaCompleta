@@ -13,9 +13,6 @@
 <body>
     <?php
     require '../vendor/autoload.php';
-    require '../src/_menu.php';
-    require '../src/_alerts.php';
-
 
     if (!($usuario = \App\Tablas\Usuario::esta_logueado())) {
         return redirigir_login();
@@ -30,6 +27,12 @@
 
     ?>
     <div class="container mx-auto">
+
+        <?php
+        require '../src/_menu.php';
+        require '../src/_alerts.php';
+        ?>
+
         <div class="overflow-x-auto relative mt-4">
             <!-- Botones de perfil -->
             <div class="ml-2 mt-10 mb-4">
