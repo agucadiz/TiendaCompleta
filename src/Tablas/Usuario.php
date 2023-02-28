@@ -30,7 +30,7 @@ class Usuario extends Modelo
 
     public static function logueado(): ?static
     {
-        return isset($_SESSION['login']) ? unserialize($_SESSION['login']) : null; //Duda, ¿porque se deserializa el login?
+        return isset($_SESSION['login']) ? unserialize($_SESSION['login']) : null; //Devuelve el objeto usuario.
     }
 
     public static function comprobar($login, $password, ?PDO $pdo = null)
@@ -72,6 +72,7 @@ class Usuario extends Modelo
         ]);
     }
 
+    //Método para cambiar el password de un usuario.
     public function cambiar_password($user, $password, ?PDO $pdo = null)
     {
         $sent = $pdo->prepare("UPDATE usuarios

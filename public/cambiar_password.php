@@ -40,10 +40,10 @@ session_start(); ?>
 
         // Recoge la contraseña actual
         $sent = $pdo->prepare("SELECT password
-                        FROM usuarios
-                        WHERE id = :id");
+                                 FROM usuarios
+                                WHERE id = :id");
         $sent->execute([':id' => $id]);
-        $origin = $sent->fetchColumn();
+        $passw_sql = $sent->fetchColumn();
 
         if ($password == '') {
             $error['password'][] = 'La contraseña es obligatoria.';
@@ -51,7 +51,7 @@ session_start(); ?>
             if ($password == $newpassword) {
                 $error['password'][] = 'La contraseña no puede coincidir con la actual';
             }
-            if (!(password_verify($password, $origin))) {
+            if (!(password_verify($password, $passw_sql))) {
                 $error['password'][] = 'La contraseña no coincide con la actual';
             }
         }
