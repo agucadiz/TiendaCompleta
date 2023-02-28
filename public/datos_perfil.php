@@ -23,9 +23,9 @@
 
     $pdo = conectar();
 
-    $usuario = \App\Tablas\Usuario::logueado()->id;
+    $id = \App\Tablas\Usuario::logueado()->id;
 
-    $sent = $pdo->query("SELECT * FROM usuarios WHERE  id = $usuario");
+    $sent = $pdo->query("SELECT * FROM usuarios WHERE  id = $id");
 
     //Mantiene los valores antiguos.
     foreach ($sent as $fila) :

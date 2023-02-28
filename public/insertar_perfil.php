@@ -11,7 +11,6 @@ $telefono= obtener_post('telefono');
 
 $set = [];
 $execute = [];
-$where = [];
 
 if (isset($usuario) && $usuario != '') {
     $set[] = 'usuario = :usuario';
