@@ -74,13 +74,13 @@ class Articulo extends Modelo
     }
 
     //Modificar artículo.
-    public static function modificar($id, $codigo, $descripcion, $precio, $categoria_id, $stock, ?PDO $pdo = null)
+    public static function modificar($id, $codigo, $descripcion, $precio, $descuento, $categoria_id, $stock, ?PDO $pdo = null)
     {
         $pdo = $pdo ?? conectar();
 
         $sent = $pdo->prepare("UPDATE articulos
-                                  SET codigo = :codigo, descripcion = :descripcion, precio = :precio, categoria_id = :categoria_id, stock = :stock
+                                  SET codigo = :codigo, descripcion = :descripcion, precio = :precio, descuento = :descuento, categoria_id = :categoria_id, stock = :stock
                                 WHERE id = :id");
-        $sent->execute([':id' => $id, ':codigo' => $codigo, ':descripcion' => $descripcion, ':precio' => $precio, ':categoria_id' => $categoria_id, ':stock' => $stock]);
+        $sent->execute([':id' => $id, ':codigo' => $codigo, ':descripcion' => $descripcion, ':precio' => $precio, ':descuento' => $descuento, ':categoria_id' => $categoria_id, ':stock' => $stock]);
     }
 }

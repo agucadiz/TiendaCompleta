@@ -22,13 +22,15 @@
     $codigo = obtener_get('codigo');
     $descripcion = obtener_get('descripcion');
     $precio = obtener_get('precio');
+    $descuento = obtener_get('descuento');
     $stock = obtener_get('stock');
-    $categoria_id = obtener_get('categoria_id'); //Capturo el id de categoría.
+    $categoria_id = obtener_get('categoria_id'); 
 
     //Recoge los nuevos datos del panel de editar.
     $codigo2 = obtener_post('codigo2');
     $descripcion2 = obtener_post('descripcion2');
     $precio2 = obtener_post('precio2');
+    $descuento2 = obtener_post('descuento2');
     $stock2 = obtener_post('stock2');
     $categoria_id2 = obtener_post('categoria_id2');
 
@@ -39,7 +41,7 @@
         && isset($categoria_id2) && $categoria_id2 != ''
         && isset($stock2) && $stock2 != ''
     ) {
-        \App\Tablas\Articulo::modificar($id, $codigo2, $descripcion2, $precio2, $categoria_id2, $stock2, $pdo);
+        \App\Tablas\Articulo::modificar($id, $codigo2, $descripcion2, $precio2, $descuento2, $categoria_id2, $stock2, $pdo);
         $_SESSION['exito'] = "El articulo se ha modificado correctamente.";
         return volver_admin();
     }
@@ -65,14 +67,19 @@
                 </label>
                 <input type="text" name="precio2" value="<?= $precio ?>" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required="">
 
+                <label for="descuento2" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                    Descuento
+                </label>
+                <input type="text" name="descuento2" value="<?= $descuento ?>" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required="">
+
                 <label for="stock2" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
                     Stock
                 </label>
                 <input type="text" name="stock2" value="<?= $stock ?>" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required="">
+
                 <label for="categoria_id2" class="block mt-2 mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
                     Categoría
                 </label>
-
                 <!-- Guarda la categoría del panel de administración -->
                 <select name="categoria_id2" class="block mt-2 mb-2 text-sm font-medium text-gray-900 dark:text-gray-300 border rounded-lg w-full p-1.5" required>
 

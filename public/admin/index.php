@@ -86,7 +86,7 @@
 
                             <!-- Botones de editar y borrar artículos -->
                             <td class="px-6 text-center">
-                                <a href="/admin/editar.php?id=<?= $fila_id ?>&codigo=<?= $fila_codigo ?>&descripcion=<?= $fila_descripcion ?>&precio=<?= $fila_precio ?>&stock=<?= $fila_stock ?>&categoria_id=<?= $fila_categoria_id ?>">
+                                <a href="/admin/editar.php?id=<?= $fila_id ?>&codigo=<?= $fila_codigo ?>&descripcion=<?= $fila_descripcion ?>&precio=<?= $fila_precio ?>&descuento=<?= $fila_descuento ?>&stock=<?= $fila_stock ?>&categoria_id=<?= $fila_categoria_id ?>">
                                     <button class="focus:outline-none text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-900">
                                         Editar
                                     </button>

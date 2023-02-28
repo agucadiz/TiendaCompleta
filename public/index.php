@@ -116,15 +116,16 @@
                 <main class="flex-1 grid grid-cols-3 gap-4 justify-center justify-items-center">
                     <?php foreach ($sent as $fila) : ?>
                         <div class="p-6 max-w-xs min-w-full bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
-                            <!-- Mostrar descripción de cada artículo -->
+                            <!-- Descripcion y Precio con Descuento aplicado -->
                             <?php if (isset($fila['descuento']) && $fila['descuento'] != '' && $fila['descuento'] > 0) : ?>
                                 <p class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"><?= hh($fila['descripcion']) ?></p>
+                                <!-- Descuento = (Precio * Descuento) / 100 -->
                                 <p class="mb-2 text-2xl font-bold tracking-tight text-red-700 dark:text-red">desde <?= dinero(hh($fila['precio']) - hh(($fila['precio'] * $fila['descuento']) / 100)) ?> </p>
                                 <span class="mb-3 font-normal text-black-700 dark:text-black-400 line-through"> <?= hh($fila['precio']) ?> € </span>
                                 <span class="mb-3 font-normal text-red-700 dark:text-red-400"> - <?= hh($fila['descuento']) ?> %</span>
+                             <!-- Descripcion y Precio sin Descuento aplicado -->   
                             <?php else : ?>
                                 <p class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"><?= hh($fila['descripcion']) ?></p>
-                                <!-- Mostrar precio de cada artículo -->
                                 <p class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"><?= hh(dinero($fila['precio'])) ?></p>
                             <?php endif ?>
                             <!-- Mostrar categoría de cada artículo -->
