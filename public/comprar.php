@@ -90,7 +90,7 @@
                     <th scope="col" class="py-3 px-6">Cantidad</th>
                     <th scope="col" class="py-3 px-6">Precio</th>
                     <th scope="col" class="py-3 px-6">Importe</th>
-                    <th scope="col" class="py-3 px-6 text-center">Acciones</th>
+                    <th scope="col" class="py-3 px-6 text-center"></th>
                 </thead>
                 <tbody>
                     <?php $total = 0 ?>
@@ -101,7 +101,9 @@
                         $articulo_id = $articulo->getId();
                         $cantidad = $linea->getCantidad();
                         $precio = $articulo->getPrecio();
-                        $importe = $cantidad * $precio;
+                        $descuento = ($precio * $articulo->getDescuento()) / 100;
+                        $precio_final = $precio - $descuento;
+                        $importe = $cantidad * $precio_final;
                         $total += $importe;
                         ?>
                         <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
@@ -109,7 +111,7 @@
                             <td class="py-4 px-6"><?= $articulo->getDescripcion() ?></td>
                             <td class="py-4 px-6 text-center"><?= $cantidad ?></td>
                             <td class="py-4 px-6 text-center">
-                                <?= dinero($precio) ?>
+                                <?= dinero($precio_final) ?>
                             </td>
                             <td class="py-4 px-6 text-center">
                                 <?= dinero($importe) ?>

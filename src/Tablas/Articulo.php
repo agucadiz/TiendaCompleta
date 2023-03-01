@@ -15,6 +15,7 @@ class Articulo extends Modelo
     private $precio;
     private $stock;
     private $categoria_id;
+    private $descuento;
 
     public function __construct(array $campos)
     {
@@ -24,6 +25,7 @@ class Articulo extends Modelo
         $this->precio = $campos['precio'];
         $this->stock = $campos['stock'];
         $this->categoria_id = $campos['categoria_id'];
+        $this->descuento = $campos['descuento'];
     }
 
     //Nos dice si el articulo existe.
@@ -50,6 +52,11 @@ class Articulo extends Modelo
     public function getStock()
     {
         return $this->stock;
+    }
+
+    public function getDescuento()
+    {
+        return $this->descuento;
     }
 
     public function getID()
