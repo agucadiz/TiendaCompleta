@@ -44,13 +44,24 @@
         <?php require '../../src/_alerts.php' ?>
 
         <div class="overflow-y-auto py-4 px-3">
-            <!-- Botón de usuarios -->
-            <div class="ml-2 mt-10 mb-4">
-                <a href="usuarios.php">
-                    <button class="focus:outline-none text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-900">
-                        Usuarios
-                    </button>
-                </a>
+            <div class="flex ml-4">
+                <!-- Botón de usuarios -->
+                <div class="ml-2 mt-10 mb-4">
+                    <a href="usuarios.php">
+                        <button class="focus:outline-none text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-900">
+                            Usuarios
+                        </button>
+                    </a>
+                </div>
+
+                <!-- Botón de categorías -->
+                <div class="ml-2 mt-10 mb-4">
+                    <a href="categorias.php">
+                        <button class="focus:outline-none text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-900">
+                            Categorías
+                        </button>
+                    </a>
+                </div>
             </div>
 
             <!-- Tabla de artículos -->
@@ -143,7 +154,7 @@
             </div>
         </div>
     </div>
-    
+
     <script src="/js/flowbite/flowbite.js"></script>
 </body>
 
