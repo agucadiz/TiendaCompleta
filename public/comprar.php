@@ -89,6 +89,7 @@
                     <th scope="col" class="py-3 px-6">Descripción</th>
                     <th scope="col" class="py-3 px-6">Cantidad</th>
                     <th scope="col" class="py-3 px-6">Precio</th>
+                    <th scope="col" class="py-3 px-6">IVA</th>
                     <th scope="col" class="py-3 px-6">Importe</th>
                     <th scope="col" class="py-3 px-6 text-center"></th>
                 </thead>
@@ -97,21 +98,27 @@
                     <?php foreach ($carrito->getLineas() as $id => $linea) : ?>
                         <?php
                         $articulo = $linea->getArticulo();
-                        $codigo = $articulo->getCodigo();
                         $articulo_id = $articulo->getId();
+                        $codigo = $articulo->getCodigo();
+                        $descripcion = $articulo->getDescripcion();
                         $cantidad = $linea->getCantidad();
                         $precio = $articulo->getPrecio();
                         $descuento = ($precio * $articulo->getDescuento()) / 100;
                         $precio_final = $precio - $descuento;
-                        $importe = $cantidad * $precio_final;
+                        $total_linea = $precio_final * $cantidad;
+                        $iva = $total_linea * 0.21;
+                        $importe = $total_linea + $iva;
                         $total += $importe;
                         ?>
                         <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                            <td class="py-4 px-6"><?= $articulo->getCodigo() ?></td>
-                            <td class="py-4 px-6"><?= $articulo->getDescripcion() ?></td>
+                            <td class="py-4 px-6"><?= $codigo ?></td>
+                            <td class="py-4 px-6"><?= $descripcion ?></td>
                             <td class="py-4 px-6 text-center"><?= $cantidad ?></td>
                             <td class="py-4 px-6 text-center">
-                                <?= dinero($precio_final) ?>
+                                <?= dinero($total_linea) ?>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <?= dinero($iva) ?>
                             </td>
                             <td class="py-4 px-6 text-center">
                                 <?= dinero($importe) ?>
@@ -128,7 +135,7 @@
                     <?php endforeach ?>
                 </tbody>
                 <tfoot>
-                    <td colspan="3"></td>
+                    <td colspan="4"></td>
                     <td class="text-center font-semibold">TOTAL:</td>
                     <td class="text-center font-semibold"><?= dinero($total) ?></td>
                 </tfoot>
