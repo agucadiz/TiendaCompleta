@@ -58,6 +58,11 @@ function volver_admin()
     header("Location: /admin/");
 }
 
+function volver_categorias()
+{
+    header("Location: /admin/categorias.php");
+}
+
 function redirigir_login()
 {
     header('Location: /login.php');
