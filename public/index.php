@@ -123,7 +123,7 @@
                                 <p class="mb-2 text-2xl font-bold tracking-tight text-red-700 dark:text-red">desde <?= dinero(hh($fila['precio']) - hh(($fila['precio'] * $fila['descuento']) / 100)) ?> </p>
                                 <span class="mb-3 font-normal text-black-700 dark:text-black-400 line-through"> <?= hh($fila['precio']) ?> € </span>
                                 <span class="mb-3 font-normal text-red-700 dark:text-red-400"> - <?= hh($fila['descuento']) ?> %</span>
-                             <!-- Descripcion y Precio sin Descuento aplicado -->   
+                                <!-- Descripcion y Precio sin Descuento aplicado -->
                             <?php else : ?>
                                 <p class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"><?= hh($fila['descripcion']) ?></p>
                                 <p class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"><?= hh(dinero($fila['precio'])) ?></p>
@@ -157,11 +157,13 @@
                                 <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                                     <th scope="col" class="py-3 px-6">Descripción</th>
                                     <th scope="col" class="py-3 px-6">Cantidad</th>
+                                    <th scope="col" class="py-3 px-6"></th>
                                 </thead>
                                 <tbody>
                                     <?php foreach ($carrito->getLineas() as $id => $linea) : ?>
                                         <?php
                                         $articulo = $linea->getArticulo();
+                                        $id = $articulo->getID();
                                         $cantidad = $linea->getCantidad();
                                         ?>
                                         <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
@@ -171,6 +173,12 @@
                                                 <?= $articulo->getCategoria() ?>
                                             </td>
                                             <td class="py-4 px-6 text-center"><?= $cantidad ?></td>
+                                            <!-- Borrar línea -->
+                                            <td class="py-4 px-6 text-center">
+                                                <a href="/eliminar_linea.php?id=<?= $id ?>" class="m-8">
+                                                    <img class="w-8 h-8 rounded-full" src="/img/papelera.svg" alt="user photo">
+                                                </a>
+                                            </td>
                                         </tr>
                                     <?php endforeach ?>
                                 </tbody>

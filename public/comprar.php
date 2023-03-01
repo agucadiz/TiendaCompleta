@@ -22,11 +22,14 @@
     if (obtener_post('_testigo') !== null) { //_testigo para saber que se ha pulsado el botón "Realizar pedido".
         $pdo = conectar();
 
+        //Arreglo del fallo de comprar varios articulos diferentes.
+        $ids = implode(', ', $carrito->getIds());
+        $where = "WHERE id IN ($ids)";
+
         //Impedir la creación de factura si al hacerlo se quedara algún artículo con existencias negativas.
-        $sent = $pdo->prepare('SELECT *
+        $sent = $pdo->prepare("SELECT *
                                  FROM articulos
-                                WHERE id IN (:ids)');
-        $sent->execute([':ids' => implode(', ', $carrito->getIds())]);
+                                 $where");
         foreach ($sent->fetchAll(PDO::FETCH_ASSOC) as $fila) {
             //Si el stock es menor que la cantidad que se va a comprar, error.
             if ($fila['stock'] < $carrito->getLinea($fila['id'])->getCantidad()) {
@@ -111,7 +114,7 @@
                             <td class="py-4 px-6 text-center">
                                 <?= dinero($importe) ?>
                             </td>
-                            <td class="py-4 px-6 text-center"> 
+                            <td class="py-4 px-6 text-center">
                                 <a href="/aumentar.php?id=<?= $articulo_id ?>" class="focus:outline-none text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-900">
                                     +
                                 </a>

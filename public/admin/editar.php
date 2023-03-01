@@ -36,7 +36,7 @@
 
     if (
         isset($codigo2) && $codigo2 != ''
-        && ($descripcion2) && $descripcion2 != ''
+        && isset($descripcion2) && $descripcion2 != ''
         && isset($precio2) && $precio2 != ''
         && isset($categoria_id2) && $categoria_id2 != ''
         && isset($stock2) && $stock2 != ''
