@@ -43,15 +43,18 @@ foreach ($factura->getLineas($pdo) as $linea) { //Duda funcionamiento.
     $codigo = $articulo->getCodigo();
     $descripcion = $articulo->getDescripcion();
     $cantidad = $linea->getCantidad();
+    $precio = $articulo->getPrecio();
+    $descuento = ($precio * $articulo->getDescuento()) / 100;
+    $precio_final = $precio - $descuento;
 
     //Operaciones con datos.
-    $precio = $articulo->getPrecio() * $cantidad;
-    $iva = $precio * 0.21;
-    $importe = $precio + $iva;
+    $total_linea = $precio_final * $cantidad;
+    $iva = $total_linea * 0.21;
+    $importe = $total_linea + $iva;
     $total += $importe;
 
     //Formateado de datos.
-    $precio = dinero($precio);
+    $total_linea = dinero($total_linea);
     $iva = dinero($iva);
     $importe = dinero($importe);
 
@@ -60,7 +63,7 @@ foreach ($factura->getLineas($pdo) as $linea) { //Duda funcionamiento.
             <td>$codigo</td>
             <td>$descripcion</td>
             <td>$cantidad</td>
-            <td>$precio</td>
+            <td>$total_linea</td>
             <td>$iva</td>
             <td>$importe</td>
         </tr>
