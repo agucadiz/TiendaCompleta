@@ -67,7 +67,9 @@ class Factura extends Modelo
         $where = !empty($where)
             ? 'WHERE ' . implode(' AND ', $where)
             : '';
-        $sent = $pdo->prepare("SELECT f.*, SUM(cantidad * precio) AS total
+
+        // Descuento = (Precio * Descuento) / 100 
+        $sent = $pdo->prepare("SELECT f.*, SUM(cantidad * precio) - (SUM(cantidad * precio * descuento) / 100) AS total
                                  FROM facturas f
                                  JOIN articulos_facturas l
                                    ON l.factura_id = f.id
