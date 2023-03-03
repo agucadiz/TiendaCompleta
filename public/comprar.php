@@ -27,7 +27,7 @@
         $where = "WHERE id IN ($ids)";
 
         //Impedir la creación de factura si al hacerlo se quedara algún artículo con existencias negativas.
-        $sent = $pdo->prepare("SELECT *
+        $sent = $pdo->query("SELECT *
                                  FROM articulos
                                  $where");
         foreach ($sent->fetchAll(PDO::FETCH_ASSOC) as $fila) {
