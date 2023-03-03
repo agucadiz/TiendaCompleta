@@ -36,7 +36,7 @@ CREATE TABLE facturas (
 
 DROP TABLE IF EXISTS articulos_facturas CASCADE;
 CREATE TABLE articulos_facturas (
-    articulo_id bigint NOT NULL REFERENCES articulos (id) ON DELETE CASCADE,
+    articulo_id bigint NOT NULL REFERENCES articulos (id),
     factura_id  bigint NOT NULL REFERENCES facturas (id),
     cantidad    int    NOT NULL,
     PRIMARY KEY (articulo_id, factura_id)
