@@ -1,4 +1,7 @@
 DROP TABLE IF EXISTS articulos CASCADE;
+
+/* 1.2.A. Implementar un control de existencias en almacén de los artículos de la tienda: 
+          Añadir los cambios correspondientes en el archivo /src/tienda.sql*/
 CREATE TABLE articulos (
     id              bigserial       PRIMARY KEY,
     codigo          varchar(13)     NOT NULL UNIQUE,
@@ -16,6 +19,8 @@ CREATE TABLE categorias (
 );
 
 DROP TABLE IF EXISTS usuarios CASCADE;
+
+/* 1.3.A. Implementar un mecanismo de validación de usuarios. */
 CREATE TABLE usuarios (
     id          bigserial    PRIMARY KEY,
     usuario     varchar(255) NOT NULL UNIQUE,

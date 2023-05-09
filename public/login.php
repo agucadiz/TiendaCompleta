@@ -21,6 +21,9 @@
     $clases_input = '';
     $error = false;
 
+    /* 1.3.D. Evitar que un usuario no validado pueda iniciar sesión. En caso de que lo intente,
+              se debe mostrar un mensaje de error con un alert que avise al usuario de que aún no ha sido
+              validado por el administrador. */
     if (isset($login, $password)) {
         if ($usuario = \App\Tablas\Usuario::comprobar($login, $password)) { //Duda en comprobar
             if (!$usuario->validado) {

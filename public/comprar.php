@@ -26,7 +26,7 @@
         $ids = implode(', ', $carrito->getIds());
         $where = "WHERE id IN ($ids)";
 
-        //Impedir la creación de factura si al hacerlo se quedara algún artículo con existencias negativas.
+        //1.2.D. Impedir la creación de factura si al hacerlo se quedara algún artículo con existencias negativas.
         $sent = $pdo->query("SELECT *
                                  FROM articulos
                                  $where");
@@ -61,7 +61,7 @@
             $i++;
         }
 
-        //Reducir las existencias del artículo al crear una factura.
+        //1.2.D. Reducir las existencias del artículo al crear una factura.
         $values = implode(', ', $values); //Duda.
         $sent = $pdo->prepare("INSERT INTO articulos_facturas (articulo_id, factura_id, cantidad)
                                VALUES $values");

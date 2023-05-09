@@ -130,9 +130,12 @@
                             <?php endif ?>
                             <!-- Mostrar categoría de cada artículo -->
                             <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Categoría: <?= hh($fila['categoria']) ?></p>
-                            <!-- Mostrar existencias de cada artículo -->
+                            <!-- 1.2.B. Mostrar las existencias de cada artículo en la URL /index.php. -->
                             <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Existencias: <?= hh($fila['stock']) ?></p>
-                            <!-- Botón carrito o sin existencias -->
+                            <!-- 1.2.C. Impedir que el usuario pueda meter un artículo en el carrito si no hay existencias
+                                        suficientes de ese artículo en el almacén. En ese caso, el botón «Añadir al carrito» debe
+                                        mostrar el texto «Sin existencias» y debe estar desactivado. Hacer también el control en la
+                                        URL /insertar_en_carrito.php -->
                             <?php if ($fila['stock'] > 0) : ?>
                                 <a href="/insertar_en_carrito.php?id=<?= $fila['id'] ?>&categoria=<?= hh($categoria) ?>" class="inline-flex items-center py-2 px-3.5 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                                     Añadir al carrito

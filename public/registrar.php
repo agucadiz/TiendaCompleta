@@ -38,7 +38,8 @@ use App\Tablas\Usuario;
     // $clases_label = ["login" = '', "password" = '', "password_repeat" = '']
     // $clases_input = ["login" = '', "password" = '', "password_repeat" = '']
 
-    //Validaciones.
+    /* 1.1.A. La contraseña debe tener una longitud mínima de 8 caracteres, y debe contener, al
+              menos, una minúscula, una mayúscula, un dígito y un signo de puntuación. */
     if (isset($login, $password, $password_repeat)) {
         $pdo = conectar();
 
@@ -109,6 +110,9 @@ use App\Tablas\Usuario;
         }
     }
     ?>
+
+    <!-- 1.1.B. El mensaje de error correspondiente debe indicar qué le falta a la contraseña para
+                ser correcta según los criterios indicados en el apartado a). -->
     <div class="container mx-auto">
         <?php require '../src/_menu.php' ?>
         <div class="mx-72">
