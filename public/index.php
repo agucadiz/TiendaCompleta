@@ -16,16 +16,57 @@
 
     $carrito = unserialize(carrito());
 
-    //Conectar a base de datos y consulta:
+    /* 3.1.B. Incorporar filtro a través de una caja de texto donde el usuario pueda escribir
+              una o varias etiquetas y que solo aparezcan los artículos que contengas todas esas
+              etiquetas, ignorando las que no estén correctamente escritas. El filtro no se puede
+              perder al añadir un artículo en el carrito. */
+
+    //capturar etiquetas y pasarlas a un string:
+    $etiquetas = obtener_get('etiqueta');
+    $etiquetas = isset($etiquetas) ? explode(" ", $etiquetas) : [];
+
+    //Conectar a base de datos.
     $pdo = conectar();
-    $sent = $pdo->query("SELECT a.*, categoria, c.id AS cat_id
-                           FROM articulos a 
-                           JOIN categorias c 
-                             ON a.categoria_id = c.id 
-                       ORDER BY codigo");
 
+    //Guarda solo las etiquetas que se encuentran en la base de datos:
+    $etiquetas_bd = array_filter($etiquetas, function ($etiqueta) use ($pdo) {
+        $etiqueta_id = $pdo->prepare("SELECT id FROM etiquetas WHERE lower(unaccent(etiqueta)) = lower(unaccent(:etiqueta))");
+        $etiqueta_id->execute([':etiqueta' => $etiqueta]);
+        return $etiqueta_id->fetchColumn() !== false; //Si la etiqueta está en la BD devuelve el ID sino devuelve FALSE.
+    });
 
-    //Lógica buscador:
+    $where = '';
+    $having = '';
+    $execute = [];
+
+    if (!empty($etiquetas_bd)) {
+        $where_etiquetas = [];
+        //$key guarda la posición en el array.
+        foreach ($etiquetas_bd as $key => $etiqueta) {
+            $where_etiquetas[] = 'lower(unaccent(e.etiqueta)) LIKE lower(unaccent(:etiqueta' . $key . '))';
+            $execute[':etiqueta' . $key] = $etiqueta; //Se pone el $key para no mezclar las etiquetas.
+        }
+        $where = 'WHERE (' . implode(' OR ', $where_etiquetas) . ')';
+        $having = 'HAVING COUNT(DISTINCT ae.etiqueta_id) = ' . count($etiquetas_bd);
+    }
+
+    if (empty($where) && empty($having)) {
+        $sent = $pdo->query("SELECT * FROM articulos ORDER BY codigo");
+    } else {
+        $sent = $pdo->prepare(
+            "SELECT articulos.*
+             FROM articulos
+             JOIN articulos_etiquetas ae ON articulos.id = ae.articulo_id
+             JOIN etiquetas e ON ae.etiqueta_id = e.id
+             $where
+             GROUP BY articulos.id
+             $having"
+        );
+
+        $sent->execute($execute);
+    }
+
+    //Lógica buscador de categorías:
     $nombre = obtener_get('nombre');
     $precio_min = obtener_get('precio_min');
     $precio_max = obtener_get('precio_max');
@@ -50,13 +91,16 @@
         $execute[':categoria'] = $categoria;
     }
 
-    $where = !empty($where) ? 'WHERE ' . implode(' AND ', $where) : '';
-    $sent = $pdo->prepare("SELECT a.*, categoria, c.id AS cat_id
-                             FROM articulos a 
-                             JOIN categorias c ON a.categoria_id = c.id 
-                             $where
-                             ORDER BY codigo");
-    $sent->execute($execute);
+    if (isset($categoria) && $categoria != '' OR isset($precio_max) && $precio_max != '' && is_numeric($precio_max) OR isset($precio_min) && $precio_min != '' && is_numeric($precio_min) OR isset($nombre) && $nombre != '') {
+        $where = !empty($where) ? 'WHERE ' . implode(' AND ', $where) : '';
+        $sent = $pdo->prepare("SELECT a.*, categoria, c.id AS cat_id
+                                 FROM articulos a 
+                                 JOIN categorias c ON a.categoria_id = c.id 
+                                 $where
+                                 ORDER BY codigo");
+        $sent->execute($execute);
+    }
+
     ?>
 
     <div class="container mx-auto">
@@ -64,11 +108,29 @@
         <?php require '../src/_menu.php' ?>
         <?php require '../src/_alerts.php' ?>
 
-        <!-- Buscador -->
+        <!-- Buscador de etiquetas -->
         <div class="container mx-4">
             <form action="" method="get">
                 <fieldset>
-                    <legend> <b>Búsqueda</b> </legend>
+                    <legend> <b>Buscador de etiquetas</b> </legend>
+                    <div class="mb-3 font-normal text-gray-700 dark:text-gray-400">
+                        <label class="block mb-2 text-sm font-medium w-1/4 pr-4">
+                            Nombre de la etiqueta:
+                            <input type="text" name="etiqueta" value="<?= hh(implode(' ', $etiquetas)) ?>" class="border text-sm rounded-lg w-full p-1.5">
+                        </label>
+                    </div>
+                    <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+                        Buscar
+                    </button>
+                </fieldset>
+            </form>
+        </div>
+
+        <!-- Buscadores -->
+        <div class="container mx-4">
+            <form action="" method="get">
+                <fieldset>
+                    <legend> <b>Buscadores</b> </legend>
                     <div class="mb-3 font-normal text-gray-700 dark:text-gray-400">
                         <label class="block mb-2 text-sm font-medium w-1/4 pr-4">
                             Nombre del artículo:
@@ -85,7 +147,7 @@
                             <input type="text" name="precio_max" value="<?= $precio_max ?>" class="border text-sm rounded-lg w-full p-1.5">
                         </label>
 
-                        <!-- 2.1.B. Implementar Buscador de categorias con un desplegable. -->
+                        <!-- 2.1.B. Implementar Buscador de CATEGORIAS con un desplegable. -->
                         <label class="block mb-2 text-sm font-medium w-1/4 pr-4">
                             Categoría:
                             <select name="categoria" class="block mt-2 mb-2 text-sm font-medium text-gray-900 dark:text-gray-300 border rounded-lg w-full p-1.5">
@@ -101,10 +163,10 @@
 
                             </select>
                         </label>
+                        <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+                            Buscar
+                        </button>
                     </div>
-                    <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
-                        Buscar
-                    </button>
                 </fieldset>
             </form>
         </div>

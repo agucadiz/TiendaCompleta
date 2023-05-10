@@ -1,7 +1,9 @@
-DROP TABLE IF EXISTS articulos CASCADE;
+CREATE EXTENSION unaccent;
+
 
 /* 1.2.A. Implementar un control de existencias en almacén de los artículos de la tienda: 
           Añadir los cambios correspondientes en el archivo /src/tienda.sql*/
+DROP TABLE IF EXISTS articulos CASCADE;
 CREATE TABLE articulos (
     id              bigserial       PRIMARY KEY,
     codigo          varchar(13)     NOT NULL UNIQUE,
@@ -48,6 +50,20 @@ CREATE TABLE articulos_facturas (
     PRIMARY KEY (articulo_id, factura_id)
 );
 
+/* Implementar funcionalidad de añadir etiquetas. */
+DROP TABLE IF EXISTS etiquetas CASCADE;
+CREATE TABLE etiquetas (
+  id            bigserial    PRIMARY KEY,
+  etiqueta      varchar(255) NOT NULL 
+);
+
+DROP TABLE IF EXISTS articulos_etiquetas CASCADE;
+CREATE TABLE articulos_etiquetas (
+    articulo_id BIGINT  NOT NULL REFERENCES articulos (id),
+    etiqueta_id BIGINT  NOT NULL REFERENCES etiquetas (id),
+    PRIMARY KEY (articulo_id, etiqueta_id)
+    );
+
 -- Carga inicial de datos de prueba:
 INSERT INTO articulos (codigo, descripcion, precio, categoria_id, stock)
     VALUES ('18273892389', 'Yogur piña', 200.50, 2, 4),
@@ -62,6 +78,21 @@ INSERT INTO categorias (categoria)
 VALUES ('Informática'),
        ('Alimentación'),
        ('Otros');
+
+INSERT INTO etiquetas (etiqueta)
+    VALUES ('descuento'),
+           ('oferta'),
+           ('rebajas');
+
+INSERT INTO articulos_etiquetas (articulo_id, etiqueta_id)
+    VALUES (1, 1),
+           (1, 2),
+           (1, 3),
+           (2, 1),
+           (2, 2),
+           (3, 3),
+           (4, 2),
+           (4, 3);
 
 INSERT INTO usuarios (usuario, password, validado)
     VALUES ('admin', crypt('admin', gen_salt('bf', 10)), true),
