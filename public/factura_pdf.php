@@ -49,7 +49,7 @@ foreach ($factura->getLineas($pdo) as $linea) { //Duda funcionamiento.
 
     //Operaciones con datos.
     $total_linea = $precio_final * $cantidad;
-    $iva = $total_linea * 0.21;
+    $iva = $total_linea * 0.21; // 2.4.A. Implementar IVA en la factura. 
     $importe = $total_linea + $iva;
     $total += $importe;
 

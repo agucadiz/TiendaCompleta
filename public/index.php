@@ -85,6 +85,7 @@
                             <input type="text" name="precio_max" value="<?= $precio_max ?>" class="border text-sm rounded-lg w-full p-1.5">
                         </label>
 
+                        <!-- 2.1.B. Implementar Buscador de categorias con un desplegable. -->
                         <label class="block mb-2 text-sm font-medium w-1/4 pr-4">
                             Categoría:
                             <select name="categoria" class="block mt-2 mb-2 text-sm font-medium text-gray-900 dark:text-gray-300 border rounded-lg w-full p-1.5">
@@ -137,6 +138,7 @@
                                         mostrar el texto «Sin existencias» y debe estar desactivado. Hacer también el control en la
                                         URL /insertar_en_carrito.php -->
                             <?php if ($fila['stock'] > 0) : ?>
+                                <!-- 2.2.A. Cuando se inserte algo en el carrito se debe mantener la búsqueda de dicha categoría. -->
                                 <a href="/insertar_en_carrito.php?id=<?= $fila['id'] ?>&categoria=<?= hh($categoria) ?>" class="inline-flex items-center py-2 px-3.5 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                                     Añadir al carrito
                                     <svg aria-hidden="true" class="ml-3 -mr-1 w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -163,6 +165,7 @@
                                     <th scope="col" class="py-3 px-6"></th>
                                 </thead>
                                 <tbody>
+                                    <!-- 2.2.B. Debe aparecer la categoría del artículo en el carrito de la compra. -->
                                     <?php foreach ($carrito->getLineas() as $id => $linea) : ?>
                                         <?php
                                         $articulo = $linea->getArticulo();

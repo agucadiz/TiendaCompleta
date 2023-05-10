@@ -123,6 +123,7 @@
                             <td class="py-4 px-6 text-center">
                                 <?= dinero($importe) ?>
                             </td>
+                            <!-- 2.3.A. Implementar botones para aumentar o disminuir la cantidad de los articulos a comprar. -->
                             <td class="py-4 px-6 text-center">
                                 <a href="/aumentar.php?id=<?= $articulo_id ?>" class="focus:outline-none text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-900">
                                     +
