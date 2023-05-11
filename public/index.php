@@ -16,10 +16,6 @@
 
     $carrito = unserialize(carrito());
 
-    /* 3.1.B. Incorporar filtro a través de una caja de texto donde el usuario pueda escribir
-              una o varias etiquetas y que solo aparezcan los artículos que contengas todas esas
-              etiquetas, ignorando las que no estén correctamente escritas. */
-
     //capturar etiquetas y pasarlas a un string:
     $etiquetas = obtener_get('etiqueta');
     $etiquetas = isset($etiquetas) ? explode(" ", $etiquetas) : [];
@@ -50,7 +46,10 @@
     }
 
     if (empty($where) && empty($having)) {
-        $sent = $pdo->query("SELECT * FROM articulos ORDER BY codigo");
+        $sent = $pdo->query("SELECT a.*, categoria, c.id AS cat_id
+                             FROM articulos a 
+                             JOIN categorias c ON a.categoria_id = c.id 
+                             ORDER BY codigo;");
     } else {
         $sent = $pdo->prepare(
             "SELECT articulos.*
@@ -64,6 +63,15 @@
 
         $sent->execute($execute);
     }
+
+    /* SELECT articulos.*, categoria, c.id AS cat_id
+        FROM articulos
+        JOIN categorias c ON articulos.categoria_id = c.id 
+        JOIN articulos_etiquetas ae ON articulos.id = ae.articulo_id
+        JOIN etiquetas e ON ae.etiqueta_id = e.id 
+        WHERE (lower(unaccent(e.etiqueta)) LIKE lower(unaccent('informatica')) OR lower(unaccent(e.etiqueta)) LIKE lower(unaccent('oferta')) OR lower(unaccent(e.etiqueta)) LIKE lower(unaccent('otros')))
+        GROUP BY articulos.id
+        HAVING COUNT(DISTINCT ae.etiqueta_id) = 3; */
 
     //Lógica buscador de categorías:
     $nombre = obtener_get('nombre');
@@ -107,6 +115,10 @@
         <?php require '../src/_menu.php' ?>
         <?php require '../src/_alerts.php' ?>
 
+        
+        <!-- 3.1.B. Incorporar filtro a través de una caja de texto donde el usuario pueda escribir
+                    una o varias etiquetas y que solo aparezcan los artículos que contengas todas esas
+                    etiquetas, ignorando las que no estén correctamente escritas. -->
         <!-- Buscador de etiquetas -->
         <div class="container mx-4">
             <form action="" method="get">
