@@ -80,8 +80,8 @@ VALUES ('Informática'),
        ('Otros');
 
 INSERT INTO etiquetas (etiqueta)
-    VALUES ('descuento'),
-           ('oferta'),
+    VALUES ('descuentos'),
+           ('ofertas'),
            ('rebajas');
 
 INSERT INTO articulos_etiquetas (articulo_id, etiqueta_id)
